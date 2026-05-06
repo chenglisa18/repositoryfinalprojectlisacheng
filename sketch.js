@@ -17,6 +17,7 @@ let frameCounter = 0;
 let osc;
 let env;
 let volumeSlider;
+let soundStarted = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -28,7 +29,6 @@ function setup() {
   env = new p5.Envelope();
   env.setADSR(0.01, 0.1, 0.2, 0.2);
   env.setRange(0.4, 0);
-  osc.start();
   osc.amp(0);
   
   volumeSlider = createSlider(0, 100, 40);
@@ -42,10 +42,6 @@ function setup() {
 }
 
 function draw() {
-  if (mouseIsPressed == true && splash.update() == true) {
-    mode = 1;
-  }
-  
   if (mode == 0) {
     splash.display();
   }
@@ -53,6 +49,22 @@ function draw() {
   if (mode == 1) {
     splash.hide();
     runGame();
+  }
+}
+
+function mousePressed() {
+  if (mode == 0 && splash.update() == true) {
+    startSound();
+    mode = 1;
+  }
+}
+
+function startSound() {
+  if (!soundStarted) {
+    userStartAudio();
+    osc.start();
+    osc.amp(0);
+    soundStarted = true;
   }
 }
 
@@ -149,6 +161,7 @@ function displayGameOver() {
 function playCatchSound() {
   let vol = volumeSlider.value() / 100;
   osc.amp(vol);
+  env.setRange(vol, 0);
   
   let notePitch = map(score % 8, 0, 7, 220, 660);
   osc.freq(notePitch);
@@ -158,6 +171,7 @@ function playCatchSound() {
 function playMissSound() {
   let vol = volumeSlider.value() / 100;
   osc.amp(vol);
+  env.setRange(vol, 0);
   osc.freq(120);
   env.play(osc);
 }
