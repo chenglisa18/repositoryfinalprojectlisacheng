@@ -1,19 +1,9 @@
 class Splash {
 
  constructor() {
-   
   this.splashBorder = 100;
-  fill(255);
-  stroke(255, 0, 0)
-  rect(this.splashBorder, this.splashBorder, windowWidth-this.splashBorder*2, windowHeight-this.splashBorder*2);
-  // draw a rectangle like this in a 3D enviornment
-  // rect(this.splashBorder-(windowWidth/2), this.splashBorder-(windowHeight/2), windowWidth-this.splashBorder*2, windowHeight-this.splashBorder*2);
-  fill(0, 0, 222);
-  strokeWeight(3)
-   
-  line(windowWidth-this.splashBorder-40, this.splashBorder+20,windowWidth-this.splashBorder-20, this.splashBorder+40)
-   line(windowWidth-this.splashBorder-20, this.splashBorder+20,windowWidth-this.splashBorder-40, this.splashBorder+40)
-   
+  this.hidden = false;
+
   this.title = createDiv("Musical Sound Catcher");
   this.title.style('color:deeppink');
   this.title.style('font-family: Arial, Helvetica, sans-serif');
@@ -26,10 +16,20 @@ class Splash {
   
   this.info.position(this.splashBorder+20, this.splashBorder+100);
   this.info.size(windowWidth-this.splashBorder*2-50, windowHeight-this.splashBorder*2-50)
-   
-
-  
 }
+
+  display(){
+    background(20, 25, 45);
+
+    fill(255);
+    stroke(255, 0, 0);
+    strokeWeight(3);
+    rect(this.splashBorder, this.splashBorder, windowWidth-this.splashBorder*2, windowHeight-this.splashBorder*2);
+
+    fill(0, 0, 222);
+    line(windowWidth-this.splashBorder-40, this.splashBorder+20,windowWidth-this.splashBorder-20, this.splashBorder+40);
+    line(windowWidth-this.splashBorder-20, this.splashBorder+20,windowWidth-this.splashBorder-40, this.splashBorder+40);
+  }
   
   update(){
        if(mouseX > windowWidth-this.splashBorder-40 && 
@@ -42,9 +42,12 @@ class Splash {
   }
  
   hide(){
-    this.title.remove()
-    this.name.remove()
-    this.info.remove()
+    if (!this.hidden) {
+      this.title.remove()
+      this.name.remove()
+      this.info.remove()
+      volumeSlider.show()
+      this.hidden = true;
+    }
   }
 }
-

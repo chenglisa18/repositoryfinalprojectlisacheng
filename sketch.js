@@ -34,6 +34,7 @@ function setup() {
   volumeSlider = createSlider(0, 100, 40);
   volumeSlider.position(20, 20);
   volumeSlider.style("width", "120px");
+  volumeSlider.hide();
   
   for (let i = 0; i < 60; i++) {
     stars.push(new Star());
@@ -299,44 +300,5 @@ class Star {
     fill(255, 255, 255, 180);
     noStroke();
     ellipse(this.x, this.y, this.size, this.size);
-  }
-}
-
-class Splash {
-  constructor() {
-    this.ready = false;
-  }
-  
-  update() {
-    this.ready = true;
-    return this.ready;
-  }
-  
-  display() {
-    background(10, 15, 35);
-    
-    for (let i = 0; i < stars.length; i++) {
-      stars[i].move();
-      stars[i].display();
-    }
-    
-    textAlign(CENTER, CENTER);
-    fill(255);
-    textSize(50);
-    text("Sound Catcher", width / 2, height / 2 - 80);
-    
-    textSize(24);
-    text("Catch the falling music notes with your paddle", width / 2, height / 2 - 20);
-    text("Move with your mouse", width / 2, height / 2 + 20);
-    text("Click anywhere to start", width / 2, height / 2 + 70);
-    
-    fill(255, 220, 100);
-    ellipse(width / 2 - 30, height / 2 + 140, 30, 30);
-    rect(width / 2 - 18, height / 2 + 95, 6, 35);
-    ellipse(width / 2 - 10, height / 2 + 100, 18, 12);
-  }
-  
-  hide() {
-    volumeSlider.show();
   }
 }
